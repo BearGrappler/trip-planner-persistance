@@ -25,6 +25,10 @@ app.use('/jquery', express.static(path.join(__dirname, '/node_modules/jquery/dis
 // serve any other static files
 app.use(express.static(path.join(__dirname, '/public')));
 
+
+app.use(require('./routes/api/days.js'));
+app.use(require('./routes/api/attractions.js'));
+
 // serve dynamic routes
 app.use(require('./routes'));
 
@@ -48,7 +52,7 @@ app.use(function (err, req, res, next) {
 var port = 3000;
 app.listen(port, function () {
   console.log('The server is listening closely on port', port);
-  db.sync()
+  db.sync({force: true})
   .then(function () {
     console.log('Synchronated the database');
   })

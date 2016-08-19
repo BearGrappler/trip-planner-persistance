@@ -23,6 +23,25 @@ var dayModule = (function () {
     $dayTitle = $('#day-title > span');
   });
 
+
+   $.get('/api/day')
+    .then(function(days){
+      days.forEach(function(currentDay){
+        var htmlToAppend = $('<button class="btn btn-circle day-btn"></button>')
+      .text(currentDay.number);
+      var text = htmlToAppend.text();
+      htmlToAppend.on('click', function(){
+        $.get('/api/day/'+text)
+        .then(function(day){
+          console.log(day);
+        })
+      })
+      $dayButtons.append(htmlToAppend);
+      })
+    })
+
+
+
   // Day class and setup
 
   function Day (data) {
@@ -47,13 +66,18 @@ var dayModule = (function () {
     this.$button.text(num);
   };
 
-  Day.prototype.buildButton = function () {
+  Day.prototype.buildButton = function (currentDay) {
     this.$button = $('<button class="btn btn-circle day-btn"></button>')
-      .text(this.number);
+      .text(currentDay.number);
     var self = this;
     this.$button.on('click', function (){
       this.blur(); // removes focus box from buttons
       tripModule.switchTo(self);
+      var curDay = this.text()
+      $.get('/api/day/' + curDay)
+      .then(function(returnedData){
+        console.log(returnedData)
+      })
     });
     return this;
   };

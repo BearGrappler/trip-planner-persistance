@@ -4,9 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build-css": "node-sass -w -r assets/stylesheets -o public/stylesheets",
+    "build-css": "./node_modules/node-sass/bin/node-sass  -w -r assets/stylesheets -o public/stylesheets",
     "start:production": "node app.js",
-    "start:dev": "nodemon -e html,css,js app.js",
+    "start:dev": "./node_modules/nodemon/bin/nodemon.js -e html,css,js app.js",
     "start": "npm run start:dev"
   },
   "author": "gabriel@fullstackacademy.com",
